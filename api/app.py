@@ -24,7 +24,7 @@ CORS(app)
 
 @ app.get("/")
 def get_default():
-    return {"message": "I <3 Open-Source at Illinois"}
+    return {"message": "why am i here???????"}
 
 
 @ app.get("/events")
@@ -42,10 +42,10 @@ def get_event(event_id: int):
     """
     event_id = int(event_id)
     # Your code goes here
-
+    return events[event_id]
     # Since this function is not yet implemented, return Status 501
     # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/501
-    abort(501)
+    # abort(501)
 
 
 @ app.post("/events")
@@ -55,20 +55,22 @@ def new():
     """
     # HINT: You can access the object to be created using request.json
     # Your code goes here
-
-    abort(501)
+    new_event = request.json
+    events.update({len(events) + 1 : new_event})
+    return "added event no way this is the correct way"
+    # abort(501)
 
 
 @ app.patch("/events/<event_id>")
-def update():
+def update(event_id: int):
     """
     Updates the event object for the given event_id
     """
+    event_id = int(event_id)
     # HINT: You can access the object to be updated using request.json
     # Your code goes here
-
-    abort(501)
-
+    events[event_id] = request.json
+    return "updated event"
 
 @ app.delete("/events/<event_id>")
 def delete(event_id: int):  # no error handling
@@ -77,8 +79,9 @@ def delete(event_id: int):  # no error handling
     """
     event_id = int(event_id)
     # Your code goes here
-
-    abort(501)
+    
+    events.pop(event_id)
+    return "deleted event"
 
 
 if __name__ == '__main__':
